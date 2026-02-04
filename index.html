@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Valentine's Day</title>
+  <style>
+    :root {
+      --pink: #ff9a9e;
+      --red: #fecfef;
+      --deep-pink: #ff5f7a;
+      --soft-white: #ffffff;
+      --text-dark: #5a2a2a;
+      --sparkle: #ffd6e6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      padding-top: calc(24px + env(safe-area-inset-top));
+      padding-right: calc(24px + env(safe-area-inset-right));
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      padding-left: calc(24px + env(safe-area-inset-left));
+      overflow: hidden;
+      color: var(--text-dark);
+    }
+
+    .card {
+      background: var(--soft-white);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 36px 28px;
+      width: min(92vw, 420px);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.6rem, 4vw, 2rem);
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: clamp(1.05rem, 3vw, 1.2rem);
+    }
+
+    .sparkly {
+      text-shadow:
+        0 0 6px rgba(255, 255, 255, 0.8),
+        0 0 14px rgba(255, 214, 230, 0.9),
+        0 0 22px rgba(255, 95, 122, 0.4);
+      animation: sparkle 2.4s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%,
+      100% {
+        text-shadow:
+          0 0 6px rgba(255, 255, 255, 0.8),
+          0 0 14px rgba(255, 214, 230, 0.9),
+          0 0 22px rgba(255, 95, 122, 0.4);
+      }
+      50% {
+        text-shadow:
+          0 0 10px rgba(255, 255, 255, 1),
+          0 0 18px rgba(255, 214, 230, 1),
+          0 0 28px rgba(255, 95, 122, 0.6);
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 34px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    #yes {
+      background: var(--deep-pink);
+      color: white;
+      box-shadow: 0 10px 20px rgba(255, 95, 122, 0.4);
+    }
+
+    #yes:active {
+      transform: scale(0.98);
+    }
+
+    #no {
+      background: #f7f0f2;
+      color: var(--text-dark);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%;
+      left: calc(50% + 180px);
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .celebration {
+      text-align: center;
+      color: var(--text-dark);
+    }
+
+    .celebration h2 {
+      font-size: clamp(2rem, 6vw, 2.6rem);
+      margin-bottom: 12px;
+    }
+
+    .celebration p {
+      margin: 8px 0;
+      font-size: clamp(1.05rem, 3vw, 1.2rem);
+    }
+
+    .celebration img {
+      width: min(80vw, 360px);
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+      margin: 16px 0 8px;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 28px 22px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="card">
+    <h1 class="sparkly">Important Question 💌</h1>
+    <p class="sparkly">Would you be my Valentine?</p>
+    <div class="actions">
+      <button id="yes">YES</button>
+    </div>
+  </main>
+  <button id="no">NO</button>
+
+  <script>
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+
+    const showCelebration = () => {
+      document.body.innerHTML = `
+        <div class="celebration">
+          <h2 class="sparkly">YAY! 💖💖💖</h2>
+          <p class="sparkly">Congrats, you just made me the happiest husband alive.</p>
+          <img src="valentine.jpg" alt="Valentine" />
+          <p class="sparkly">See you on Valentine’s Day 🌹</p>
+        </div>
+      `;
+      document.body.style.background =
+        "linear-gradient(135deg, #ff9a9e, #fad0c4)";
+      document.body.style.display = "flex";
+      document.body.style.alignItems = "center";
+      document.body.style.justifyContent = "center";
+    };
+
+    const getSafeArea = () => {
+      const style = getComputedStyle(document.body);
+      return {
+        top: parseFloat(style.paddingTop) || 0,
+        right: parseFloat(style.paddingRight) || 0,
+        bottom: parseFloat(style.paddingBottom) || 0,
+        left: parseFloat(style.paddingLeft) || 0,
+      };
+    };
+
+    const moveNoButton = () => {
+      const padding = 12;
+      const safe = getSafeArea();
+      const maxX =
+        window.innerWidth - noButton.offsetWidth - safe.right - padding;
+      const maxY =
+        window.innerHeight - noButton.offsetHeight - safe.bottom - padding;
+      const minX = safe.left + padding;
+      const minY = safe.top + padding;
+      const randomX = minX + Math.random() * Math.max(0, maxX - minX);
+      const randomY = minY + Math.random() * Math.max(0, maxY - minY);
+      noButton.style.left = `${randomX}px`;
+      noButton.style.top = `${randomY}px`;
+    };
+
+    yesButton.addEventListener("click", showCelebration);
+
+    noButton.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+    noButton.addEventListener("mouseenter", moveNoButton);
+
+    noButton.addEventListener("click", () => {
+      if (confirm("Are you sure? 😏")) {
+        alert("Nice try 😌 That still counts as YES 💖");
+        showCelebration();
+      } else {
+        moveNoButton();
+      }
+    });
+
+    window.addEventListener("resize", moveNoButton);
+  </script>
+</body>
+</html>
