@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine's Day</title>
+  <style>
+    :root {
+      --pink: #ff9a9e;
+      --red: #fecfef;
+      --deep-pink: #ff5f7a;
+      --soft-white: #ffffff;
+      --text-dark: #5a2a2a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--text-dark);
+    }
+
+    .card {
+      background: var(--soft-white);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 40px 48px;
+      max-width: 420px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: 1.2rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #yes {
+      background: var(--deep-pink);
+      color: white;
+      box-shadow: 0 10px 20px rgba(255, 95, 122, 0.4);
+    }
+
+    #yes:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    #no {
+      background: #f7f0f2;
+      color: var(--text-dark);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%;
+      left: calc(50% + 200px);
+    }
+
+    .celebration {
+      text-align: center;
+      color: var(--text-dark);
+    }
+
+    .celebration h2 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+
+    .celebration p {
+      margin: 8px 0;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        margin: 20px;
+        padding: 32px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 1.05rem;
+      }
+
+      #no {
+        left: 10px;
+        top: auto;
+        bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" id="card">
+    <h1>Important Question 💌</h1>
+    <p>Would you be my Valentine?</p>
+    <div class="actions">
+      <button id="yes">YES</button>
+    </div>
+  </main>
+  <button id="no">NO</button>
+
+  <script>
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const card = document.getElementById("card");
+
+    const showCelebration = () => {
+      document.body.innerHTML = `
+        <div class="celebration">
+          <h2>YAY! 💖💖💖</h2>
+          <p>Congrats, you just made me the happiest husband alive.</p>
+          <p>See you on Valentine’s Day 🌹</p>
+        </div>
+      `;
+      document.body.style.background =
+        "linear-gradient(135deg, #ff9a9e, #fad0c4)";
+      document.body.style.display = "flex";
+      document.body.style.alignItems = "center";
+      document.body.style.justifyContent = "center";
+    };
+
+    yesButton.addEventListener("click", showCelebration);
+
+    const moveNoButton = () => {
+      const padding = 20;
+      const maxX = window.innerWidth - noButton.offsetWidth - padding;
+      const maxY = window.innerHeight - noButton.offsetHeight - padding;
+      const randomX = Math.max(padding, Math.random() * maxX);
+      const randomY = Math.max(padding, Math.random() * maxY);
+      noButton.style.left = `${randomX}px`;
+      noButton.style.top = `${randomY}px`;
+    };
+
+    noButton.addEventListener("mouseenter", moveNoButton);
+    noButton.addEventListener("touchstart", moveNoButton);
+
+    noButton.addEventListener("click", () => {
+      if (confirm("Are you sure? 😏")) {
+        alert("Nice try 😌 That still counts as YES 💖");
+        showCelebration();
+      }
+    });
+  </script>
+</body>
+</html>
